@@ -1,32 +1,32 @@
-import React from 'react';
-import './App.css';
-import AllowPage from './user/authorization/AllowPage';
-import SignUpPage from './user/authorization/SignUpPage';
-import SignInPage from './user/authorization/SignInPage';
-import { ChakraProvider } from "@chakra-ui/react"
-import {Switch, BrowserRouter as Router, Route} from 'react-router-dom'
+import React from "react";
+import AllowPage from "./user/authorization/page/AllowPage";
+import SignUpPage from "./user/authorization/page/SignUpPage";
+import SignInPage from "./user/authorization/page/SignInPage";
+import { Box, ChakraProvider } from "@chakra-ui/react";
+import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
+import { AUTH, SIGN_IN, SIGN_UP } from "./Routes";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <Box className="AppWrapper">
+      <Box className="App">
         <ChakraProvider>
           <Router>
             <Switch>
-              <Route exact path="/auth">
-                  <AllowPage></AllowPage>
+              <Route exact path={AUTH}>
+                <AllowPage></AllowPage>
               </Route>
-              <Route exact path="/signin">
-                  <SignInPage></SignInPage>
+              <Route exact path={SIGN_IN}>
+                <SignInPage></SignInPage>
               </Route>
-              <Route exact path="/signup">
-                  <SignUpPage></SignUpPage>
+              <Route exact path={SIGN_UP}>
+                <SignUpPage></SignUpPage>
               </Route>
             </Switch>
           </Router>
         </ChakraProvider>
-      </header>
-    </div>
+      </Box>
+    </Box>
   );
 }
 

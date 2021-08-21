@@ -1,8 +1,12 @@
 .App {
-    background-color: #90CDF4;
-    height: 1000px;
+  padding: 40px;
+}
+
+.AppWrapper {
+  background-color: #90cdf4;
+  height: 100vh;
 }
 
 .App-header {
-  padding: 20px
+  padding: 20px;
 }
