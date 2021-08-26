@@ -1,5 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 import React from "react";
+import { AUTH } from "../../../Routes";
 import authorizationClientInstance from "../api/AuthorizationClientImpl";
 import Creds from "../Creds";
 
@@ -7,13 +8,22 @@ export const useSignIn = () => {
   const toast = useToast();
   const toastIdRef = React.useRef();
 
+  const queryParams = new URLSearchParams(window.location.search);
+
+  const client_id = queryParams.get("client_id") as string;
+  const redirect_uri = queryParams.get("redirect_uri") as string;
+  const response_type = queryParams.get("response_type") as string;
+  const scope = queryParams.get("scope") as string | undefined;
+  const state = queryParams.get("state") as string;
+
   const handleSubmit = (creds: Creds) => {
     authorizationClientInstance
-      .signIn(creds)
+      .signIn(creds, client_id, redirect_uri, state, response_type, scope)
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
-          window.location.href = res.data;
+          console.log("signed in successfully");
+          window.location.href =
+            "http://localhost:8080" + AUTH + "?ticket=" + res.data.ticket;
         }
       })
       .catch((error) => {

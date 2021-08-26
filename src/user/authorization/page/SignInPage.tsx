@@ -25,7 +25,7 @@ export default function SignInPage() {
   const signIn = useSignIn();
 
   const handleSubmit = () => {
-    signIn({ username: username, password: password });
+    signIn({ login: username, password: password });
   };
 
   return (
