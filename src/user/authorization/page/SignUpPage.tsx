@@ -20,13 +20,13 @@ export default function SignUpPage() {
     setShow(!show);
   };
 
-  const [username, setUsername] = React.useState("");
+  const [login, setLogin] = React.useState("");
   const [password, setPassword] = React.useState("");
 
   const signUp = useSignUp();
 
   const handleSubmit = () => {
-    signUp({ username: username, password: password });
+    signUp({ login: login, password: password });
   };
 
   return (
@@ -47,7 +47,7 @@ export default function SignUpPage() {
             className="Center"
             pr="4.5rem"
             bgColor="white"
-            onChange={(event) => setUsername(event.currentTarget.value)}
+            onChange={(event) => setLogin(event.currentTarget.value)}
           />
         </FormControl>
 
