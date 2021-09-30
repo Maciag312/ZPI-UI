@@ -11,7 +11,7 @@ import {
 import { Heading } from "@chakra-ui/react";
 import React from "react";
 import "./../../style.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSignIn } from "./SignInPage.helpers";
 
 export default function SignInPage() {
@@ -21,6 +21,11 @@ export default function SignInPage() {
   const handleShowPassword = () => {
     setShow(!show);
   };
+
+  interface ParamTypes {
+    organization: string;
+  }
+  const { organization } = useParams<ParamTypes>();
 
   const signIn = useSignIn();
 
@@ -35,7 +40,7 @@ export default function SignInPage() {
           Sign in
         </Heading>
         <Text fontSize="2xl" marginBottom="25px" className="ClientLogo">
-          client logo
+          {organization} logo
         </Text>
         <FormControl isRequired mt={6}>
           <FormLabel textAlign="left" mb="8px">
@@ -79,7 +84,7 @@ export default function SignInPage() {
           Sign in
         </Button>
       </Box>
-      <Link to="/signup">or sign up</Link>
+      <Link to={"/organization/" + organization + "/signup"}>or sign up</Link>
       <Text fontSize="1xl" className="AuthorizationServerLogo">
         auth server logo
       </Text>
