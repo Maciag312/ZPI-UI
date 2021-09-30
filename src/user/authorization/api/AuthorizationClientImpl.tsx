@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { API } from "../../../Routes";
-import Creds from "../Creds";
+import Creds from "../../../common/Creds";
 import { AuthorizationClient } from "./AuthorizationClient";
 import { host } from "./AuthorizationServerConfig";
 import URICreator from "./URICreator";

@@ -1,10 +1,11 @@
 import React from "react";
-import AllowPage from "./user/authorization/page/AllowPage";
-import SignUpPage from "./user/authorization/page/SignUpPage";
-import SignInPage from "./user/authorization/page/SignInPage";
+import AllowPage from "./user/authorization/page/allow/AllowPage";
+import SignUpPage from "./user/authorization/page/signup/SignUpPage";
+import SignInPage from "./user/authorization/page/signin/SignInPage";
+import SignInDashboard from "./dashboard/signin/SignInDashboard";
 import { Box, ChakraProvider } from "@chakra-ui/react";
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
-import { AUTH, SIGN_IN, SIGN_UP } from "./Routes";
+import { DASHBOARD_SIGNIN, AUTH, SIGN_IN, SIGN_UP } from "./Routes";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
               </Route>
               <Route exact path={SIGN_UP}>
                 <SignUpPage></SignUpPage>
+              </Route>
+              <Route path={DASHBOARD_SIGNIN}>
+                <SignInDashboard></SignInDashboard>
               </Route>
             </Switch>
           </Router>

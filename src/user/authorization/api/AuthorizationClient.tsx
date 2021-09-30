@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import Creds from "../Creds";
+import Creds from "../../../common/Creds";
 
 export interface AuthorizationClient {
   signIn(

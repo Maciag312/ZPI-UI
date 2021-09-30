@@ -1,8 +1,8 @@
 import { useToast } from "@chakra-ui/react";
 import React from "react";
-import { AUTH } from "../../../Routes";
-import authorizationClientInstance from "../api/AuthorizationClientImpl";
-import Creds from "../Creds";
+import { AUTH } from "../../../../Routes";
+import authorizationClientInstance from "../../api/AuthorizationClientImpl";
+import Creds from "../../../../common/Creds";
 
 export const useSignIn = () => {
   const toast = useToast();
