@@ -4,12 +4,17 @@ import Creds from "../../../common/Creds";
 import { AuthorizationClient } from "./AuthorizationClient";
 import { host } from "./AuthorizationServerConfig";
 import URICreator from "./URICreator";
+import Consent from "../page/allow/Consent";
 
 class AuthorizationClientImpl implements AuthorizationClient {
   host: string;
 
   constructor(host: string) {
     this.host = host;
+  }
+
+  conset(consent: Consent): Promise<AxiosResponse<any>> {
+    return axios.post(URICreator.consentURI(this.host), consent);
   }
 
   signIn(

@@ -7,6 +7,7 @@ class Api {
 
   SIGN_IN = this.API_ENDPOINT + "/authenticate";
   SIGN_UP = this.USERS_ENDPOINT + "/signup";
+  CONSENT = this.API_ENDPOINT + "/consent";
 
   MANAGER_SIGN_IN = (organization: string) =>
     this.API_ENDPOINT +
