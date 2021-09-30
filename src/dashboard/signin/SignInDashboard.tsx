@@ -10,11 +10,11 @@ import {
 } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 import React from "react";
+import { useParams } from "react-router-dom";
 import "./../style.css";
-import { Link } from "react-router-dom";
-import { useSignUp } from "./SignUpPage.helpers";
+import { useSignIn } from "./SignInDashboard.helpers";
 
-export default function SignUpPage() {
+export default function SignInDashboard(props: any) {
   const [show, setShow] = React.useState(false);
   const handleShowPassword = () => {
     setShow(!show);
@@ -23,20 +23,24 @@ export default function SignUpPage() {
   const [login, setLogin] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const signUp = useSignUp();
+  interface ParamTypes {
+    organization: string;
+  }
+  const { organization } = useParams<ParamTypes>();
+  const signIn = useSignIn(organization);
 
   const handleSubmit = () => {
-    signUp({ login: login, password: password });
+    signIn({ login: login, password: password });
   };
 
   return (
     <Box className="AuthorizationPageBox" rounded="lg">
       <Box className="AuthorizationPageBoxContent">
         <Heading as="h3" size="lg" className="AuthorizationPageHeading">
-          Sign up
+          Sign in
         </Heading>
         <Text fontSize="2xl" className="ClientLogo">
-          client logo
+          {organization} dashboard
         </Text>
         <FormControl isRequired mt={6}>
           <FormLabel textAlign="left" mb="8px">
@@ -77,10 +81,9 @@ export default function SignUpPage() {
           marginTop="20px"
           size="sm"
         >
-          Sign up
+          Sign in
         </Button>
       </Box>
-      <Link to="/signin">or sign in</Link>
       <Text fontSize="1xl" className="AuthorizationServerLogo">
         Auth Server Logo
       </Text>

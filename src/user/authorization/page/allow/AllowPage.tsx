@@ -1,5 +1,5 @@
 import { Button, Box } from "@chakra-ui/react";
-import "./../style.css";
+import "./../../style.css";
 
 export default function AllowPage() {
   const queryParams = new URLSearchParams(window.location.search);
