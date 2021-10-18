@@ -1,6 +1,10 @@
 import { API } from "../../../Routes";
 
 class URICreator {
+  consentURI(host: string): string {
+    return host + API.CONSENT;
+  }
+
   signInURI = (
     host: string,
     client_id: string,

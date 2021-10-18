@@ -1,5 +1,6 @@
 import { Button, Box } from "@chakra-ui/react";
 import "./../../style.css";
+import { useConsent } from "./AllowPage.helpers";
 
 export default function AllowPage() {
   const queryParams = new URLSearchParams(window.location.search);
@@ -7,7 +8,11 @@ export default function AllowPage() {
   const client = queryParams.get("client");
   const accesses = queryParams.getAll("accesses");
 
-  const onSubmit = () => {};
+  const consent = useConsent();
+
+  const onSubmit = () => {
+    consent("init");
+  };
 
   return (
     <Box className="AllowPageBox" rounded="lg">
@@ -19,7 +24,7 @@ export default function AllowPage() {
             - {access} <br></br>
           </Box>
         ))}
-        <Button onSubmit={onSubmit} colorScheme="blue">
+        <Button onClick={onSubmit} colorScheme="blue">
           Allow
         </Button>
       </Box>
