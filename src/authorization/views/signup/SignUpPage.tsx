@@ -3,43 +3,44 @@ import {
   Button,
   FormControl,
   FormLabel,
+  Heading,
   Input,
   InputGroup,
   InputRightElement,
   Text,
 } from "@chakra-ui/react";
-import { Heading } from "@chakra-ui/react";
 import React from "react";
-import "./../../style.css";
-import { Link, useParams } from "react-router-dom";
-import { useSignIn } from "./SignInPage.helpers";
+import { useParams } from "react-router-dom";
+import "../../style.css";
+import { useSignUp } from "./SignUpPage.helpers";
 
-export default function SignInPage() {
+export default function SignUpPage() {
   const [show, setShow] = React.useState(false);
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
   const handleShowPassword = () => {
     setShow(!show);
   };
+
+  const [login, setLogin] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   interface ParamTypes {
     organization: string;
   }
   const { organization } = useParams<ParamTypes>();
 
-  const signIn = useSignIn();
+  const signUp = useSignUp();
 
   const handleSubmit = () => {
-    signIn({ login: username, password: password });
+    signUp({ login: login, password: password });
   };
 
   return (
     <Box className="AuthorizationPageBox" rounded="lg">
       <Box className="AuthorizationPageBoxContent">
         <Heading as="h3" size="lg" className="AuthorizationPageHeading">
-          Sign in
+          Sign up
         </Heading>
-        <Text fontSize="2xl" marginBottom="25px" className="ClientLogo">
+        <Text fontSize="2xl" className="ClientLogo">
           {organization} logo
         </Text>
         <FormControl isRequired mt={6}>
@@ -51,7 +52,7 @@ export default function SignInPage() {
             className="Center"
             pr="4.5rem"
             bgColor="white"
-            onChange={(event) => setUsername(event.currentTarget.value)}
+            onChange={(event) => setLogin(event.currentTarget.value)}
           />
         </FormControl>
 
@@ -81,12 +82,11 @@ export default function SignInPage() {
           marginTop="20px"
           size="sm"
         >
-          Sign in
+          Sign up
         </Button>
       </Box>
-      <Link to={"/organization/" + organization + "/signup"}>or sign up</Link>
       <Text fontSize="1xl" className="AuthorizationServerLogo">
-        auth server logo
+        Auth Server Logo
       </Text>
     </Box>
   );

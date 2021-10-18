@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
-import Creds from "../../../common/Creds";
-import Consent from "../page/allow/Consent";
+import Creds from "../../common/types";
+import Consent from "../views/allow/Consent";
 
 export interface AuthorizationClient {
   signIn(
@@ -12,5 +12,5 @@ export interface AuthorizationClient {
     scope?: string
   ): Promise<AxiosResponse<any>>;
   signUp(creds: Creds): Promise<AxiosResponse<any>>;
-  conset(consent: Consent): Promise<AxiosResponse<any>>;
+  consent(consent: Consent): Promise<AxiosResponse<any>>;
 }

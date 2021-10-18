@@ -8,7 +8,6 @@ class Api {
   SIGN_IN = this.API_ENDPOINT + "/authenticate";
   SIGN_UP = this.USERS_ENDPOINT + "/signup";
   CONSENT = this.API_ENDPOINT + "/consent";
-
   MANAGER_SIGN_IN = (organization: string) =>
     this.API_ENDPOINT +
     this.ORGANIZATION(organization) +
@@ -19,7 +18,5 @@ class Api {
 export const AUTH = "/allow";
 export const SIGN_IN = "/organization/:organization/signin";
 export const SIGN_UP = "/organization/:organization/signup";
-export const DASHBOARD = "/organization/:organization/dashboard";
-export const DASHBOARD_SIGNIN = DASHBOARD + SIGN_IN;
 
 export const API = new Api();

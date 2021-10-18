@@ -30,6 +30,11 @@
   margin-right: 15%;
 }
 
+.AuthorizationPageHeading {
+  padding-top: 20px;
+  margin-bottom: 5px;
+}
+
 .AllowPageBox {
   max-width: 300px;
   text-align: center;
@@ -40,9 +45,4 @@
 }
 .AllowPageBoxContent {
   padding: 15%;
-}
-
-.AuthorizationPageHeading {
-  padding-top: 20px;
-  margin-bottom: 5px;
 }
