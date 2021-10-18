@@ -11,7 +11,7 @@ export const useConsent = () => {
 
   const handleSubmit = (state: string) => {
     authorizationClientInstance
-      .conset({ state: state, ticket: ticket })
+      .consent({ state: state, ticket: ticket })
       .then((res) => {
         if (res.status === 200) {
           console.log("consent successfully");

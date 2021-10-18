@@ -1,20 +1,16 @@
 import axios, { AxiosResponse } from "axios";
-import { API } from "../../../Routes";
-import Creds from "../../../common/Creds";
+import Creds from "../../common/types";
+import { API } from "../../routes";
+import Consent from "../views/allow/Consent";
 import { AuthorizationClient } from "./AuthorizationClient";
 import { host } from "./AuthorizationServerConfig";
 import URICreator from "./URICreator";
-import Consent from "../page/allow/Consent";
 
 class AuthorizationClientImpl implements AuthorizationClient {
   host: string;
 
   constructor(host: string) {
     this.host = host;
-  }
-
-  conset(consent: Consent): Promise<AxiosResponse<any>> {
-    return axios.post(URICreator.consentURI(this.host), consent);
   }
 
   signIn(
@@ -42,8 +38,8 @@ class AuthorizationClientImpl implements AuthorizationClient {
     return axios.post(this.host + API.SIGN_UP, creds);
   }
 
-  allow(code: String): Response {
-    throw new Error("Method not implemented.");
+  consent(consent: Consent): Promise<AxiosResponse<any>> {
+    return axios.post(URICreator.consentURI(this.host), consent);
   }
 }
 

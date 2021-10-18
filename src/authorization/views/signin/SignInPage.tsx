@@ -3,34 +3,34 @@ import {
   Button,
   FormControl,
   FormLabel,
+  Heading,
   Input,
   InputGroup,
   InputRightElement,
   Text,
 } from "@chakra-ui/react";
-import { Heading } from "@chakra-ui/react";
 import React from "react";
-import { useParams } from "react-router-dom";
-import "./../style.css";
-import { useSignIn } from "./SignInDashboard.helpers";
+import { Link, useParams } from "react-router-dom";
+import "../../style.css";
+import { useSignIn } from "./SignInPage.helpers";
 
-export default function SignInDashboard(props: any) {
+export default function SignInPage() {
   const [show, setShow] = React.useState(false);
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const handleShowPassword = () => {
     setShow(!show);
   };
-
-  const [login, setLogin] = React.useState("");
-  const [password, setPassword] = React.useState("");
 
   interface ParamTypes {
     organization: string;
   }
   const { organization } = useParams<ParamTypes>();
-  const signIn = useSignIn(organization);
+
+  const signIn = useSignIn();
 
   const handleSubmit = () => {
-    signIn({ login: login, password: password });
+    signIn({ login: username, password: password });
   };
 
   return (
@@ -39,8 +39,8 @@ export default function SignInDashboard(props: any) {
         <Heading as="h3" size="lg" className="AuthorizationPageHeading">
           Sign in
         </Heading>
-        <Text fontSize="2xl" className="ClientLogo">
-          {organization} dashboard
+        <Text fontSize="2xl" marginBottom="25px" className="ClientLogo">
+          {organization} logo
         </Text>
         <FormControl isRequired mt={6}>
           <FormLabel textAlign="left" mb="8px">
@@ -51,7 +51,7 @@ export default function SignInDashboard(props: any) {
             className="Center"
             pr="4.5rem"
             bgColor="white"
-            onChange={(event) => setLogin(event.currentTarget.value)}
+            onChange={(event) => setUsername(event.currentTarget.value)}
           />
         </FormControl>
 
@@ -84,8 +84,9 @@ export default function SignInDashboard(props: any) {
           Sign in
         </Button>
       </Box>
+      <Link to={"/organization/" + organization + "/signup"}>or sign up</Link>
       <Text fontSize="1xl" className="AuthorizationServerLogo">
-        Auth Server Logo
+        auth server logo
       </Text>
     </Box>
   );

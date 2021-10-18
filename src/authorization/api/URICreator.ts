@@ -1,4 +1,4 @@
-import { API } from "../../../Routes";
+import { API } from "../../routes";
 
 class URICreator {
   consentURI(host: string): string {
