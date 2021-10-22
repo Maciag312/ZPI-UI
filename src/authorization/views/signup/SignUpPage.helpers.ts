@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import React from "react";
-import Creds from "../../../common/types";
 import authorizationClientInstance from "../../api/AuthorizationClientImpl";
+import Creds from "../../common/types";
 
 export const useSignUp = () => {
   const toast = useToast();

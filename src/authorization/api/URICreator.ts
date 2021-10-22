@@ -1,30 +1,24 @@
 import { API } from "../../routes";
+import { ClientData } from "./types";
 
 class URICreator {
   consentURI(host: string): string {
     return host + API.CONSENT;
   }
 
-  signInURI = (
-    host: string,
-    client_id: string,
-    redirect_uri: string,
-    state: string,
-    response_type: string,
-    scope?: string
-  ) => {
+  signInURI = (host: string, clientData: ClientData) => {
     return (
       host +
       API.SIGN_IN +
       "?client_id=" +
-      client_id +
+      clientData.client_id +
       "&redirect_uri=" +
-      redirect_uri +
+      clientData.redirect_uri +
       "&state=" +
-      state +
+      clientData.state +
       "&response_type=" +
-      response_type +
-      this.resolveOptionalScopeParam(scope)
+      clientData.response_type +
+      this.resolveOptionalScopeParam(clientData.scope)
     );
   };
 

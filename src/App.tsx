@@ -14,13 +14,13 @@ const App = () => {
           <Router>
             <Switch>
               <Route exact path={AUTH}>
-                <AllowPage></AllowPage>
+                <AllowPage />
               </Route>
               <Route exact path={SIGN_IN}>
-                <SignInPage></SignInPage>
+                <SignInPage />
               </Route>
               <Route exact path={SIGN_UP}>
-                <SignUpPage></SignUpPage>
+                <SignUpPage />
               </Route>
             </Switch>
           </Router>
