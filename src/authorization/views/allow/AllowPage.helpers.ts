@@ -14,7 +14,6 @@ export const useConsent = () => {
       .consent({ state: state, ticket: ticket })
       .then((res) => {
         if (res.status === 200) {
-          console.log("consent successfully");
           window.location.href = res.data;
         }
       })

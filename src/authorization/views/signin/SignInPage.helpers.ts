@@ -15,7 +15,6 @@ export const useSignIn = () => {
       .signIn(creds, getClientDataFromParams())
       .then((res) => {
         if (res.status === 200) {
-          console.log("signed in successfully");
           window.location.href = host + AUTH + "?ticket=" + res.data.ticket;
         }
       })

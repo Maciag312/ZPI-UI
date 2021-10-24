@@ -11,7 +11,6 @@ export const useSignUp = () => {
     authorizationClientInstance
       .signUp(creds)
       .then((res) => {
-        console.log(res);
         if (res.status === 201) {
           showCreatedAccount();
         }
