@@ -1,5 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 import React from "react";
+import { URLSearchParams } from "url";
 import { AUTH } from "../../../routes";
 import authorizationClientInstance from "../../api/AuthorizationClientImpl";
 import { host } from "../../api/AuthorizationServerConfig";

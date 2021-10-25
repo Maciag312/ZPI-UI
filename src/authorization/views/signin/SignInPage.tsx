@@ -8,8 +8,10 @@ import {
   InputGroup,
   InputRightElement,
   Text,
+  useToast,
 } from "@chakra-ui/react";
-import React from "react";
+import queryString from "query-string";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { SIGN_UP } from "../../../routes";
 import "../../style.css";
@@ -19,6 +21,8 @@ export default function SignInPage() {
   const [show, setShow] = React.useState(false);
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const toast = useToast();
+  const toastIdRef = React.useRef();
   const signIn = useSignIn();
 
   const handleShowPassword = () => {
@@ -28,6 +32,21 @@ export default function SignInPage() {
   const handleSubmit = () => {
     signIn({ login: username, password: password });
   };
+
+  useEffect(() => {
+    const parsed = queryString.parse(window.location.search);
+    const error = parsed.error;
+    const error_description = parsed.error_description;
+
+    if (error !== null) {
+      toastIdRef.current = toast({
+        description: "Client configuration error",
+        status: "error",
+      }) as undefined;
+
+      console.log(error, error_description);
+    }
+  }, []);
 
   return (
     <Box className="AuthorizationPageBox" rounded="lg">
