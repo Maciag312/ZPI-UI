@@ -1,6 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 import React from "react";
-import { AUTH } from "../../../routes";
+import { AUTH, TWO_FACTOR_AUTH } from "../../../routes";
 import authorizationClientInstance from "../../api/AuthorizationClientImpl";
 import { host } from "../../api/AuthorizationServerConfig";
 import { ClientData } from "../../api/types";
@@ -15,7 +15,14 @@ export const useSignIn = () => {
       .signIn(creds, getClientDataFromParams())
       .then((res) => {
         if (res.status === 200) {
-          window.location.href = host + AUTH + "?ticket=" + res.data.ticket;
+          if (res.data.ticket !== null && res.data.ticket !== undefined) {
+            window.location.href = host + AUTH + "?ticket=" + res.data.ticket;
+          } else if (
+            res.data.twoFactor !== null &&
+            res.data.twoFactor !== undefined
+          ) {
+            window.location.href = host + TWO_FACTOR_AUTH;
+          }
         }
       })
       .catch((error) => {
