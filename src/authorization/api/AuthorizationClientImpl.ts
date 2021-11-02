@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { API } from "../../routes";
-import Creds, { TwoFactorAuthResponse } from "../common/types";
+import Creds, { TwoFactorAuthRequest } from "../common/types";
 import Consent from "../views/allow/Consent";
 import { Audit } from "./audit.types";
 import { AuthorizationClient } from "./AuthorizationClient";
@@ -37,7 +37,7 @@ class AuthorizationClientImpl implements AuthorizationClient {
     return axios.post(URICreator.consentURI(this.host), consent);
   }
 
-  twoFactorAuth(code: TwoFactorAuthResponse): Promise<AxiosResponse<any>> {
+  twoFactorAuth(code: TwoFactorAuthRequest): Promise<AxiosResponse<any>> {
     return axios.post(this.host + API.TWO_FACTOR_AUTH, code);
   }
 }

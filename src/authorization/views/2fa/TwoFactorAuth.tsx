@@ -1,5 +1,6 @@
 import { Box, PinInput, PinInputField, Text } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
+import { TwoFactorAuthRequest } from "../../common/types";
 import "./style.css";
 import { useTwoFactorAuth } from "./TwoFactorAuth.helpers";
 
@@ -9,10 +10,15 @@ export const TwoFactorAuth = () => {
   const [code, setCode] = useState("");
   const pinInput = useRef<any>();
 
-  const onSubmit = (value: string) => {
-    handleSubmit(value);
+  const onSubmit = (code: string) => {
+    handleSubmit({ ticket: retrieveTicket(), code } as TwoFactorAuthRequest);
     setIsInputLocked(true);
     setCode("");
+  };
+
+  const retrieveTicket = () => {
+    const queryParams = new URLSearchParams(window.location.search);
+    return queryParams.get("ticket") as string;
   };
 
   const pinFocus = () => {

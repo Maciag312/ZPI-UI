@@ -3,16 +3,16 @@ import React, { useState } from "react";
 import { AUTH } from "../../../routes";
 import authorizationClientInstance from "../../api/AuthorizationClientImpl";
 import { host } from "../../api/AuthorizationServerConfig";
-import { TwoFactorAuthResponse } from "../../common/types";
+import { TwoFactorAuthRequest } from "../../common/types";
 
 export const useTwoFactorAuth = () => {
   const toast = useToast();
   const toastIdRef = React.useRef();
   const [isSuccess, setIsSuccess] = useState(true);
 
-  const handleSubmit = (code: string) => {
+  const handleSubmit = (data: TwoFactorAuthRequest) => {
     authorizationClientInstance
-      .twoFactorAuth({ code } as TwoFactorAuthResponse)
+      .twoFactorAuth(data)
       .then((res) => {
         if (res.status === 200) {
           if (res.data.ticket !== null) {

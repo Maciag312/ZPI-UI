@@ -3,6 +3,13 @@ export default interface Creds {
   password: string;
 }
 
-export interface TwoFactorAuthResponse {
+export interface TwoFactorAuthRequest {
+  ticket: string;
   code: string;
+}
+
+export enum TicketType {
+  TICKET,
+  TICKET_2FA,
+  UNRECOGNIZED,
 }
