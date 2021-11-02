@@ -1,10 +1,12 @@
 import { useToast } from "@chakra-ui/react";
+import { AxiosResponse } from "axios";
 import React from "react";
-import { AUTH } from "../../../routes";
+import { AUTH, TWO_FACTOR_AUTH } from "../../../routes";
 import authorizationClientInstance from "../../api/AuthorizationClientImpl";
 import { host } from "../../api/AuthorizationServerConfig";
 import { ClientData } from "../../api/types";
-import Creds from "../../common/types";
+import Creds, { TicketType } from "../../common/types";
+import { RedirectType } from "./SignInPage.types";
 
 export const useSignIn = () => {
   const toast = useToast();
@@ -14,14 +16,45 @@ export const useSignIn = () => {
     authorizationClientInstance
       .signIn(creds, getClientDataFromParams())
       .then((res) => {
-        if (res.status === 200) {
-          window.location.href = host + AUTH + "?ticket=" + res.data.ticket;
+        switch (redirectType(res)) {
+          case RedirectType.CONSENT:
+            window.location.href = host + AUTH + "?ticket=" + res.data.ticket;
+            break;
+          case RedirectType.TWO_FACTOR_AUTH:
+            window.location.href =
+              host + TWO_FACTOR_AUTH + "?ticket=" + res.data.ticket;
+            break;
+
+          default:
+            break;
         }
       })
       .catch((error) => {
         console.log(error);
         showLoggingInFailure();
       });
+  };
+
+  const ticketType = (type: string) => {
+    if (type === "TICKET") return TicketType.TICKET;
+    if (type === "TICKET_2FA") return TicketType.TICKET_2FA;
+
+    return TicketType.UNRECOGNIZED;
+  };
+
+  const redirectType = (res: AxiosResponse<any>) => {
+    if (res.status === 200) {
+      switch (ticketType(res.data.ticket_type)) {
+        case TicketType.TICKET:
+          return RedirectType.CONSENT;
+        case TicketType.TICKET_2FA:
+          return RedirectType.TWO_FACTOR_AUTH;
+        default:
+          return RedirectType.ERROR;
+      }
+    }
+
+    return RedirectType.ERROR;
   };
 
   const getClientDataFromParams = () => {

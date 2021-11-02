@@ -12,8 +12,6 @@ import {
 } from "@chakra-ui/react";
 import queryString from "query-string";
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { SIGN_UP } from "../../../routes";
 import "../../style.css";
 import { useSignIn } from "./SignInPage.helpers";
 
@@ -96,7 +94,7 @@ export default function SignInPage() {
           Sign in
         </Button>
       </Box>
-      <Link to={SIGN_UP}>or sign up</Link>
+      {/* <Link to={SIGN_UP}>or sign up</Link> */}
       <Text fontSize="1xl" className="AuthorizationServerLogo">
         auth server logo
       </Text>

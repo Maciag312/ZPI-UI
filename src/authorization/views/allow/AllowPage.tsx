@@ -1,4 +1,5 @@
-import { Button, Box } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
+import React from "react";
 import "./../../style.css";
 import { useConsent } from "./AllowPage.helpers";
 
