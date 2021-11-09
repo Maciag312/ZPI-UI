@@ -25,7 +25,7 @@ export default function SignUpPage() {
   };
 
   const handleSubmit = () => {
-    signUp({ login: login, password: password });
+    signUp({ email: login, password: password });
   };
 
   return (
