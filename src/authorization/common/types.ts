@@ -1,5 +1,5 @@
 export default interface Creds {
-  login: string;
+  email: string;
   password: string;
 }
 

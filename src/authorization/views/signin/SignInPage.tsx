@@ -28,7 +28,7 @@ export default function SignInPage() {
   };
 
   const handleSubmit = () => {
-    signIn({ login: username, password: password });
+    signIn({ email: username, password: password });
   };
 
   useEffect(() => {
