@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Center,
   FormControl,
   FormLabel,
   Heading,
@@ -12,27 +13,55 @@ import {
 } from "@chakra-ui/react";
 import queryString from "query-string";
 import React, { useEffect } from "react";
+import { IoIosArrowBack } from "react-icons/io";
+import QrReader from "react-qr-reader";
 import "../../style.css";
-import { useSignIn } from "./SignInPage.helpers";
+import { useSendQrCode, useSignIn } from "./SignInPage.helpers";
 
 export default function SignInPage() {
   const [show, setShow] = React.useState(false);
-  const [username, setUsername] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [step, setStep] = React.useState("1");
   const [password, setPassword] = React.useState("");
+  const [qrCodeEnable, setQrCodeEnable] = React.useState(false);
+  let qrCodeFeature = true;
   const toast = useToast();
   const toastIdRef = React.useRef();
   const signIn = useSignIn();
+  const sendQrCode = useSendQrCode();
 
   const handleShowPassword = () => {
     setShow(!show);
   };
 
-  const handleSubmit = () => {
-    signIn({ email: username, password: password });
+  const handleClick = () => {
+    if (step === "1") {
+      setStep("2");
+    } else if (step === "2") {
+      signIn({ email: email, password: password });
+    }
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "Enter") handleSubmit();
+  const handleScan = (data: string | null) => {
+    if (data !== null) {
+      setPassword(data);
+    }
+  };
+
+  const onKeyUp = (e: React.KeyboardEvent<any>) => {
+    if (e.key === "Enter") {
+      handleClick();
+    }
+  };
+
+  const generateQrCode = () => {
+    setQrCodeEnable(true);
+    sendQrCode(email);
+  };
+
+  const goBack = () => {
+    setQrCodeEnable(false);
+    setStep("1");
   };
 
   useEffect(() => {
@@ -52,50 +81,100 @@ export default function SignInPage() {
 
   return (
     <Box className="AuthorizationPageBox" rounded="lg">
+      {step === "2" ? (
+        <Button
+          onClick={goBack}
+          size="lg"
+          float="left"
+          leftIcon={<IoIosArrowBack />}
+        />
+      ) : (
+        <></>
+      )}
       <Box className="AuthorizationPageBoxContent">
         <Heading as="h3" size="lg" className="AuthorizationPageHeading">
-          Sign in
+          Sign in {step === "2" ? "to" : ""}
         </Heading>
-        <FormControl isRequired mt={6}>
-          <FormLabel textAlign="left" mb="8px">
-            {" "}
-            Username or email
-          </FormLabel>
-          <Input
-            className="Center"
-            pr="4.5rem"
-            bgColor="white"
-            onChange={(event) => setUsername(event.currentTarget.value)}
-          />
-        </FormControl>
+        <Text>{step === "2" ? email : ""}</Text>
 
-        <FormControl isRequired mt={6} onKeyDown={handleKeyDown}>
-          <FormLabel textAlign="left" mb="8px">
-            {" "}
-            Password
-          </FormLabel>
-          <InputGroup className="Center" size="md">
+        {step === "1" ? (
+          <FormControl onKeyUp={onKeyUp} isRequired mt={6}>
+            <FormLabel textAlign="left" mb="8px">
+              {" "}
+              Email
+            </FormLabel>
             <Input
+              className="Center"
               pr="4.5rem"
-              type={show ? "text" : "password"}
               bgColor="white"
-              onChange={(event) => setPassword(event.currentTarget.value)}
+              onChange={(event) => setEmail(event.currentTarget.value)}
             />
+          </FormControl>
+        ) : (
+          <></>
+        )}
 
-            <InputRightElement width="4.5rem">
-              <Button h="1.75rem" size="sm" onClick={handleShowPassword}>
-                {show ? "Hide" : "Show"}
-              </Button>
-            </InputRightElement>
-          </InputGroup>
-        </FormControl>
+        {step === "2" ? (
+          <>
+            <FormControl onKeyUp={onKeyUp} isRequired mt={6}>
+              <FormLabel textAlign="left" mb="8px">
+                {" "}
+                Password
+              </FormLabel>
+              <InputGroup className="Center" size="md">
+                <Input
+                  value={password}
+                  pr="4.5rem"
+                  type={show ? "text" : "password"}
+                  bgColor="white"
+                  onChange={(event) => setPassword(event.currentTarget.value)}
+                />
+
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size="sm" onClick={handleShowPassword}>
+                    {show ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+            {qrCodeFeature ? (
+              <>
+                {qrCodeEnable === true ? (
+                  <>
+                    <Center>
+                      <QrReader
+                        delay={25}
+                        style={{ height: 200, width: 200 }}
+                        onError={(er) => console.log(er)}
+                        onScan={handleScan}
+                      />
+                    </Center>
+                  </>
+                ) : (
+                  <Text
+                    onClick={generateQrCode}
+                    cursor="pointer"
+                    fontWeight="semibold"
+                    color="SkyBlue"
+                  >
+                    Or send password in qr code and scan it here
+                  </Text>
+                )}
+              </>
+            ) : (
+              <></>
+            )}
+          </>
+        ) : (
+          <></>
+        )}
         <Button
-          onClick={handleSubmit}
+          onClick={handleClick}
           colorScheme="green"
           marginTop="20px"
           size="sm"
         >
-          Sign in
+          {step === "1" ? "Next" : "Sign in"}
         </Button>
       </Box>
       {/* <Link to={SIGN_UP}>or sign up</Link> */}

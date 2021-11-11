@@ -2,6 +2,7 @@ import { useToast } from "@chakra-ui/react";
 import { AxiosResponse } from "axios";
 import React from "react";
 import { AUTH, TWO_FACTOR_AUTH } from "../../../routes";
+import amsClient from "../../api/AMSClient";
 import authorizationClientInstance from "../../api/AuthorizationClientImpl";
 import { host } from "../../api/AuthorizationServerConfig";
 import { ClientData } from "../../api/types";
@@ -92,4 +93,37 @@ export const useSignIn = () => {
   };
 
   return handleSubmit;
+};
+
+export const useSendQrCode = () => {
+  const toast = useToast();
+  const toastIdRef = React.useRef();
+  const sendQrCode = (email: string) => {
+    amsClient
+      .sendQrCode(email)
+      .then((res) => {
+        if (res.status === 200) {
+          showSendQrSuccess(email);
+        }
+      })
+      .catch((er) => {
+        showSendQrFailure();
+      });
+  };
+
+  const showSendQrFailure = () => {
+    toastIdRef.current = toast({
+      description: "QR cannot be send",
+      status: "error",
+    }) as undefined;
+  };
+
+  const showSendQrSuccess = (email: string) => {
+    toastIdRef.current = toast({
+      description: "QR send to " + email,
+      status: "success",
+    }) as undefined;
+  };
+
+  return sendQrCode;
 };
