@@ -30,8 +30,19 @@ export const useSignIn = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
-        showLoggingInFailure();
+        switch (error.response.status) {
+          case 400:
+            showLoggingInFailure("Incorrect username or password");
+            break;
+          case 429:
+            var delay = new Date(error.response.data.error_description);
+            showLoggingInFailure(
+              `Too many attempts, wait till: ${delay.toLocaleTimeString()}`
+            );
+            break;
+          default:
+            showLoggingInFailure("Cannot connect to service");
+        }
       });
   };
 
@@ -73,9 +84,9 @@ export const useSignIn = () => {
     } as ClientData;
   };
 
-  const showLoggingInFailure = () => {
+  const showLoggingInFailure = (message: string) => {
     toastIdRef.current = toast({
-      description: "Wrong username or password!",
+      description: message,
       status: "error",
     }) as undefined;
   };

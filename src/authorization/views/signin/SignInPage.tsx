@@ -31,6 +31,10 @@ export default function SignInPage() {
     signIn({ email: username, password: password });
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter") handleSubmit();
+  };
+
   useEffect(() => {
     const parsed = queryString.parse(window.location.search);
     const error = parsed.error;
@@ -65,7 +69,7 @@ export default function SignInPage() {
           />
         </FormControl>
 
-        <FormControl isRequired mt={6}>
+        <FormControl isRequired mt={6} onKeyDown={handleKeyDown}>
           <FormLabel textAlign="left" mb="8px">
             {" "}
             Password
