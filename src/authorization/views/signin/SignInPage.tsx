@@ -45,10 +45,11 @@ export default function SignInPage() {
   const handleScan = (data: string | null) => {
     if (data !== null) {
       setPassword(data);
+      handleClick();
     }
   };
 
-  const onKeyUp = (e: React.KeyboardEvent<any>) => {
+  const onKeyClick = (e: React.KeyboardEvent<any>) => {
     if (e.key === "Enter") {
       handleClick();
     }
@@ -98,7 +99,7 @@ export default function SignInPage() {
         <Text>{step === "2" ? email : ""}</Text>
 
         {step === "1" ? (
-          <FormControl onKeyUp={onKeyUp} isRequired mt={6}>
+          <FormControl onKeyUp={onKeyClick} isRequired mt={6}>
             <FormLabel textAlign="left" mb="8px">
               {" "}
               Email
@@ -116,7 +117,7 @@ export default function SignInPage() {
 
         {step === "2" ? (
           <>
-            <FormControl onKeyUp={onKeyUp} isRequired mt={6}>
+            <FormControl onKeyUp={onKeyClick} isRequired mt={6}>
               <FormLabel textAlign="left" mb="8px">
                 {" "}
                 Password
@@ -171,16 +172,14 @@ export default function SignInPage() {
         <Button
           onClick={handleClick}
           colorScheme="green"
-          marginTop="20px"
+          marginTop={4}
+          marginBottom={4}
+          onKeyDown={onKeyClick}
           size="sm"
         >
           {step === "1" ? "Next" : "Sign in"}
         </Button>
       </Box>
-      {/* <Link to={SIGN_UP}>or sign up</Link> */}
-      <Text fontSize="1xl" className="AuthorizationServerLogo">
-        auth server logo
-      </Text>
     </Box>
   );
 }

@@ -4,8 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { TwoFactorAuth } from "./authorization/views/2fa/TwoFactorAuth";
 import AllowPage from "./authorization/views/allow/AllowPage";
 import SignInPage from "./authorization/views/signin/SignInPage";
-import SignUpPage from "./authorization/views/signup/SignUpPage";
-import { AUTH, SIGN_IN, SIGN_UP, TWO_FACTOR_AUTH } from "./routes";
+import { AUTH, SIGN_IN, TWO_FACTOR_AUTH } from "./routes";
 
 const App = () => {
   return (
@@ -19,9 +18,6 @@ const App = () => {
               </Route>
               <Route exact path={SIGN_IN}>
                 <SignInPage />
-              </Route>
-              <Route exact path={SIGN_UP}>
-                <SignUpPage />
               </Route>
               <Route exact path={TWO_FACTOR_AUTH}>
                 <TwoFactorAuth />
