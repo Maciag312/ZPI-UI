@@ -16,6 +16,10 @@ class AuthorizationClientImpl implements AuthorizationClient {
     this.host = host;
   }
 
+  sendQrCode(email: string): Promise<AxiosResponse<any>> {
+    return axios.post(this.host + API.OTP, { email });
+  }
+
   audit(): Promise<Audit> {
     return fetchAudit();
   }
@@ -27,10 +31,6 @@ class AuthorizationClientImpl implements AuthorizationClient {
         audit,
       } as AuthorizationRequestDTO)
     );
-  }
-
-  signUp(creds: Creds): Promise<AxiosResponse<any>> {
-    return axios.post(this.host + API.SIGN_UP, creds);
   }
 
   consent(consent: Consent): Promise<AxiosResponse<any>> {

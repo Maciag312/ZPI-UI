@@ -30,6 +30,16 @@ export const useSignIn = () => {
         }
       })
       .catch((error) => {
+        if (
+          error === undefined ||
+          error === null ||
+          !error.hasOwnProperty("response") ||
+          error.response === undefined
+        ) {
+          showLoggingInFailure("Login error");
+          return;
+        }
+
         switch (error.response.status) {
           case 400:
             showLoggingInFailure("Incorrect username or password");
@@ -92,4 +102,37 @@ export const useSignIn = () => {
   };
 
   return handleSubmit;
+};
+
+export const useSendQrCode = () => {
+  const toast = useToast();
+  const toastIdRef = React.useRef();
+  const sendQrCode = (email: string) => {
+    authorizationClientInstance
+      .sendQrCode(email)
+      .then((res) => {
+        if (res.status === 200) {
+          showSendQrSuccess(email);
+        }
+      })
+      .catch((er) => {
+        showSendQrFailure();
+      });
+  };
+
+  const showSendQrFailure = () => {
+    toastIdRef.current = toast({
+      description: "QR cannot be send",
+      status: "error",
+    }) as undefined;
+  };
+
+  const showSendQrSuccess = (email: string) => {
+    toastIdRef.current = toast({
+      description: "QR send to " + email,
+      status: "success",
+    }) as undefined;
+  };
+
+  return sendQrCode;
 };

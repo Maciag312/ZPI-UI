@@ -7,6 +7,6 @@ import { ClientData } from "./types";
 export interface AuthorizationClient {
   audit(): Promise<Audit>;
   signIn(creds: Creds, clientData: ClientData): Promise<AxiosResponse<any>>;
-  signUp(creds: Creds): Promise<AxiosResponse<any>>;
   consent(consent: Consent): Promise<AxiosResponse<any>>;
+  sendQrCode(email: string): Promise<AxiosResponse<any>>;
 }
