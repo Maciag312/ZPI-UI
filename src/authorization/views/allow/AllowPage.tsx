@@ -1,4 +1,4 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, ListItem, UnorderedList } from "@chakra-ui/react";
 import React from "react";
 import "./../../style.css";
 import { useConsent } from "./AllowPage.helpers";
@@ -6,8 +6,10 @@ import { useConsent } from "./AllowPage.helpers";
 export default function AllowPage() {
   const queryParams = new URLSearchParams(window.location.search);
 
-  const client = queryParams.get("client");
-  const accesses = queryParams.getAll("accesses");
+  const scopes = queryParams
+    .getAll("scope")
+    .map((s) => s.split(" "))
+    .flatMap((s) => s);
 
   const consent = useConsent();
 
@@ -18,12 +20,11 @@ export default function AllowPage() {
   return (
     <Box className="AllowPageBox" rounded="lg">
       <Box className="AllowPageBoxContent">
-        {client} wants to have access to
-        {accesses.map((access) => (
-          <Box key={access}>
-            {" "}
-            - {access} <br></br>
-          </Box>
+        Client wants to have access to
+        {scopes.map((scope) => (
+          <UnorderedList key={scope}>
+            <ListItem>{scope}</ListItem>
+          </UnorderedList>
         ))}
         <Button onClick={onSubmit} colorScheme="blue">
           Allow

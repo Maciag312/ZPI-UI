@@ -16,7 +16,7 @@ export const useTwoFactorAuth = () => {
       .then((res) => {
         if (res.status === 200) {
           if (res.data.ticket !== null) {
-            window.location.href = `${host}${AUTH}?ticket=${res.data.ticket}`;
+            window.location.href = `${host}${AUTH}?ticket=${res.data.ticket}&scope=${res.data.scope}`;
           }
         }
       })

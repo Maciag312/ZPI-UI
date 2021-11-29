@@ -18,7 +18,13 @@ export const useSignIn = () => {
       .then((res) => {
         switch (redirectType(res)) {
           case RedirectType.CONSENT:
-            window.location.href = host + AUTH + "?ticket=" + res.data.ticket;
+            window.location.href =
+              host +
+              AUTH +
+              "?ticket=" +
+              res.data.ticket +
+              "&scope=" +
+              res.data.scope;
             break;
           case RedirectType.TWO_FACTOR_AUTH:
             window.location.href =
